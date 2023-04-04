@@ -4,11 +4,11 @@ colorama==0.4.6
 contourpy==1.0.7
 cycler==0.11.0
 fonttools==4.39.3
-joblib @ file:///home/conda/feedstock_root/build_artifacts/joblib_1663332044897/work
+joblib 
 kiwisolver==1.4.4
 matplotlib==3.7.1
 nltk==3.8.1
-numpy @ file:///D:/bld/numpy_1675642725500/work
+numpy 
 packaging==23.0
 pandas==1.5.3
 Pillow==9.4.0
