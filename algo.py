@@ -90,9 +90,8 @@ def hybrid(userId, titles):
     movies = smd.iloc[movie_indices][['title', 'vote_count', 'vote_average', 'year', 'id']]
     movies['est'] = movies['id'].apply(lambda x: svd.predict(userId, indices_map.loc[x]['movieId']).est)
     movies = movies.sort_values('est', ascending=False)
-    return movies.head(10)
-
-    #print(movies.head())
+    recommended_movies = movies.head(10).to_dict(orient='records')
+    return recommended_movies
 
 
 print(hybrid(1,'Avatar'))
