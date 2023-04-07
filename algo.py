@@ -94,5 +94,3 @@ def hybrid(userId, titles):
     return recommended_movies
 
 
-print(hybrid(1,'Avatar'))
-print(hybrid(8,'Avatar'))
