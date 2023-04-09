@@ -45,6 +45,18 @@ cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 smd = smd.reset_index()
 titles = smd['title']
 indices = pd.Series(smd.index, index=smd['title'])
+
+#Content based, description rec fxn
+
+def get_recommendations(title):
+    idx = indices[title]
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    sim_scores = sim_scores[1:31]
+    movie_indices = [i[0] for i in sim_scores]
+    return titles.iloc[movie_indices]
+
+
 md['id'] = md['id'].astype('int')
 smd = md[md['id'].isin(links_small)]
 
@@ -71,7 +83,7 @@ trainset = data.build_full_trainset()
 svd.fit(trainset)
 
 
-#Rec fxn
+#Hybrid Rec fxn
 
 
 def hybrid(userId, titles):
@@ -88,10 +100,14 @@ def hybrid(userId, titles):
     movies = smd.iloc[movie_indices][['title', 'vote_count', 'vote_average', 'year', 'id']]
     movies['est'] = movies['id'].apply(lambda x: svd.predict(userId, indices_map.loc[x]['movieId']).est)
     movies = movies.sort_values('est', ascending=False)
-    return movies.head(10)
+    return movies.head(5)
 
     #print(movies.head())
 
 
-print(hybrid(1,'Avatar'))
-print(hybrid(8,'Avatar'))
+
+print(get_recommendations('Casino').head(5))
+print('.......................................................................................')
+print(hybrid(1,'Casino'))
+
+
